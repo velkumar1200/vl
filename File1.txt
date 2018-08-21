@@ -1,0 +1,158 @@
+' ======================================
+' NUMERIC VALUE FOR BUTTON TYPES
+' 0 for OK 
+' 1 for OK, CANCLE
+' 2 for ABORT, RETRY, IGNORE 
+' 3 for YES, NO, CANCLE
+' 4 for YES, No
+' 5 for RETRY, CANCLE
+Option explicit ' The Variable have must be declared. 
+On Error Resume Next ' Move to Next Step When error Occurs.
+Const Site = "www.google.com" ' Way to declare the Constant Value
+Dim message, num
+message = "Hello World!!"
+num = 10
+MsgBox message , 0 , "Hello !!"
+MsgBox num, 0 , "Hello !!"
+'---------------------------------------------------------------------------------
+Dim input1, input2, sum, name
+name = InputBox("Enter your name: ")
+input1 = InputBox("Enter the first number: ")
+input2 = InputBox("Enter the second number: ")
+'input = InputBox("Enter the second number: ", Site , "Enter Input Here", 5000, 5000) // IT will Customize the Output
+sum = CInt(input1) + CInt(input2)
+MsgBox "Hello : " & name & " !! ", 0 , Site
+MsgBox "The sum of the two numbers : " & sum, 0, Site
+'---------------------------------------------------------------------------------
+Dim arrShopping(1,9)
+arrShopping(1,3)= "Vel"
+arrShopping(0,3)= "Chocolate"
+MsgBox arrShopping(1,3) & " wants some " & arrShopping(0,3)
+'---------------------------------------------------------------------------------
+' "PRESERVE" is to save the new array value with previous values (without Preserve previous array value are empty only the new array value is present.)
+Dim arrShopping
+arrShopping = Array("Bread","Milk","Apple","Carrot","Cereal","Orange")
+ReDim Preserve arrShopping(10)	
+arrShopping(10) = "Coffee"
+MsgBox arrShopping(9)
+MsgBox arrShopping(10)
+'---------------------------------------------------------------------------------
+Dim arrShopping
+Dim str
+arrShopping = Array("Bread","Milk","Apples","Carrot")
+For Each str In arrShopping
+MsgBox str
+Next
+'---------------------------------------------------------------------------------
+' WScript is used to run script continuous without click ok button each time
+Dim myLoop
+For myLoop = 1 To 20
+WScript.Echo myLoop
+Next
+'---------------------------------------------------------------------------------
+Dim myLoop
+Do
+myLoop = InputBox("Please enter in the number 3 to Continue Looping")
+Loop While myLoop = 3
+'---------------------------------------------------------------------------------
+Dim myLoop
+Do
+myLoop = InputBox("Enter a number between 1 and 5")
+Loop Until myLoop = 3
+'---------------------------------------------------------------------------------
+' INFINITE Loop
+Dim myLoop
+Do Until myLoop = 3
+myLoop = 4
+Loop
+'---------------------------------------------------------------------------------
+' DLL Dynamic Loop Library File that contain reusable code
+Dim objFSO, objFolder, objFile, objNewFolder
+' Create the FileSystemObject'
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+' Get the Folder we want to copy files from. c:\Scripts
+Set objFolder = objFSO.GetFolder("c:\Scripts")
+' Create the new folder called C:\test
+Set ObjNewFolder = objFSO.CreateFolder("c:\test")
+' For Each File in the folder, copy the file to the destination
+For Each objFile In objFolder.Files
+ObjFile.Copy "c:\test\"
+Next
+'---------------------------------------------------------------------------------
+'CHECK THE FILE EXISTS OR NOT
+
+Dim objFSO, objFolder, objFile, objNewFolder
+objNewFolder = "c:\test"
+' Create the FileSystemObject'
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+' Get the Folder we want to copy files from. c:\Scripts
+Set objFolder = objFSO.GetFolder("c:\Scripts")
+' Check to see if the c:\test folder exists, if not, create it.
+If objFSO.FolderExists(objNewFolder) Then
+WScript.Echo "The Destination Folder " & objNewFolder & " already exists"
+Else
+WScript.Echo "The Destination Folder " & objNewFolder & "will be created"
+' Create the new folder called C:\test
+Set ObjNewFolder = objFSO.CreateFolder("c:\test")
+End If
+' For Each File in the folder, copy the file to the destination
+For Each objFile In objFolder.Files
+ObjFile.Copy "c:\test\"
+Next
+'---------------------------------------------------------------------------------
+set objFSO = CreateObject("Scripting.FileSystemObject")
+objFSO.MoveFolder "c:\test" , "c:\Renamed Folder"
+'---------------------------------------------------------------------------------
+Dim objFSO, objFile, LogFile
+LogFile = "c:\LogFile.txt"
+Const Forwriting = 2
+Const Forappending = 8
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If objFSO.FileExists(LogFile) Then
+WScript.Echo "The File" & LogFile & "Exists"
+Set objFile = objFSO.OpenTextFile(LogFile, Forappending)
+objFile.Write "New Entry" & Now & VbCrLf
+Else
+WScript.Echo "The File " & LogFile & "Doesnt exist, I will create it"
+Set objFile = objFSO.CreateTextFile(LogFile, Forwriting)
+objFSO.Write "New Entry "& Now & VbCrLf
+End If
+objFile.Close
+'---------------------------------------------------------------------------------
+Dim WshShell, BtnCode
+Set WshShell = WScript.CreateObject("WScript.Shell")
+' intButton = object.Popup(strText,{nSecondsToWait},{strTitle},{nType})
+BtnCode = WshShell.Popup("Is lyou name Bob?", 7 , "Answer This Question:", 4 + 32)
+Select Case BtnCode
+	Case 6	WScript.Echo "Hello Bob"
+	Case 7	WScript.Echo "Oh, I must have you confused with someone else."
+	Case -1	WScript.Echo "Hello, are you there?"
+End Select
+'---------------------------------------------------------------------------------
+Set WshShell = WScript.CreateObject("WScript.Shell")
+WshShell.Run "calc"
+WScript.Sleep 100
+WshShell.AppActivate "Calculator"
+WScript.Sleep 100
+WshShell.SendKeys "5"
+WScript.Sleep 500
+WshShell.SendKeys "(+)"
+WScript.Sleep 500
+WshShell.SendKeys "10(+)"
+WScript.Sleep 500
+WshShell.SendKeys "12"
+WScript.Sleep 1000
+WshShell.SendKeys "="
+WScript.Sleep 2500
+'---------------------------------------------------------------------------------
+Set MyApp = CreateObject("Outlook.Application")
+Set MyItem = MyApp.CreateItem(0)
+With MyItem
+    .To = "velkumarl@in.boardex.com"
+    .Subject = "Subject"
+    .ReadReceiptRequested = False
+    .HTMLBody = "resport"
+End With
+MyItem.Send
+'---------------------------------------------------------------------------------
